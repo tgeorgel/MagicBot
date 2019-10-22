@@ -1,0 +1,35 @@
+
+// ---- [ Done ] ---- //
+
+- (Done) Auto sub-channels create on join (Configured names or 'Channel Name Number ' + Number (1 to limit..))
+- (Done) Personnalised Auto sub-channels create on join (ex: if Robert join, it'll be 'My swagg channel #Robert' but if it's Jean, it'll be another channel name)
+
+
+
+// ---- [ Pending ] ---- //
+
+- Jail/unjail (time etc)
+- Autoattribute on channel join (ex: server group 'CS:GO Player' on the join of channel "I'm playing CS!")
+- Autoattribute on msg confirm (ex: '!accept' in PM to be attributed 'Confirmed Player' SG)
+- Advertising (server channel ads)
+- Support chans (alert on channel join both the joiner and the set server groups)
+- Automove on connect (ex members to a member chan, admins to an admin chan..)
+- Automove recording people (with a tag in their name ex: '$R')
+- Away mover
+- AFK mover
+- Quizz
+- (In developpement, being improved) Welcome msg/poke
+- !donatorset [$d_id] [$timedays] [$uid] (will set a donator for X days, may have different levels. Could unlock some bot features later)
+- !warn [$timedays] [$uid] [$reason] (will set a warning on a player for a number of days. Fetch the warns on a client with !warnsOn [$uid])
+- Proper TS logger (jails etc, channel creation, modify, bans, kick, etc) (Maybe in database to sort detailed data on the web?)
+- A way to count clients in wich games and write it into a channel description
+- Detect (TeamSpeakUser or Android or iPhone) "Tu as l'air d'etre nouveau sur TeamSpeak car nous detectons que tu as choisi le pseudo par defaut. Nous te conseillons de changer pour un pseudo qui te correspond mieux car tu pourrais gener la connexion de nouveaux usagers decouvrant eux aussi le logiciel. Merci et bon jeu"
+- Programm temporary password at a precise date and send it by email to authorised users
+
+- Web Panel to replace webinterface by psychokiller + Control the bot. (fully responsive)
+
+
+
+// ---- [ Current Bugs ] ---- //
+
+ * Server group to pause sub-channels module
