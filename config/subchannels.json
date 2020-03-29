@@ -1,0 +1,62 @@
+{
+    "enabled": true,
+    "max_subchannels": 300,
+    "max_subchannels_message": "Could not give you a channel because the maximum subchannels limit has been reached.",
+    "properties": {
+        "max_clients": 10,
+        "password": "",
+        "temporary": true,
+        "delete_delay": 6
+    },
+    "rules": [
+        {
+            "channel_id": 1,
+            "mode": "dynamic",
+            "on_join_msg": "",
+            "max_subchannels": -1,
+            "properties": {
+                "max_clients": -1,
+                "password": ""
+            },
+            "names": [
+                "Alpha ",
+                "Bravo "
+            ],
+            "names_custom": []
+        },
+        {
+            "channel_id": 3,
+            "mode": "static",
+            "on_join_msg": "",
+            "max_subchannels": -1,
+            "properties": {
+                "password": "",
+                "max_clients": -1,
+                "delete_delay": 30
+            },
+            "names": [
+                "Alpha",
+                "Bravo",
+                "Charlie",
+                "Delta",
+                "Echo",
+                "Foxtrot",
+                "Golf",
+                "Hotel",
+                "India",
+                "Juliet",
+                "kilo",
+                "Lima",
+                "Mike",
+                "November",
+                "Oscar"
+            ],
+            "names_custom": [
+                {
+                    "client_uid": "jCcFtC8aMBtXYtnfS5sW64byJ8Q=",
+                    "name": "Thomaaaato"
+                }
+            ]
+        }
+    ]
+}

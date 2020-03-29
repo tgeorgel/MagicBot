@@ -1,1 +1,4 @@
-MagicPanel/
+MagicPanel
+vendor
+.env
+old
