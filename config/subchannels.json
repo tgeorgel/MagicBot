@@ -2,6 +2,9 @@
     "enabled": true,
     "max_subchannels": 300,
     "max_subchannels_message": "Could not give you a channel because the maximum subchannels limit has been reached.",
+    "on_create_msg": "",
+    "on_create_channel_groups": [],
+    "generate_password": false,
     "properties": {
         "max_clients": 10,
         "password": "",
@@ -12,11 +15,10 @@
         {
             "channel_id": 1,
             "mode": "dynamic",
-            "on_join_msg": "",
+            "on_create_msg": "",
             "max_subchannels": -1,
             "properties": {
-                "max_clients": -1,
-                "password": ""
+                "max_clients": -1
             },
             "names": [
                 "Alpha ",
@@ -27,10 +29,11 @@
         {
             "channel_id": 3,
             "mode": "static",
-            "on_join_msg": "",
+            "on_create_msg": "",
+            "on_create_channel_groups": [],
             "max_subchannels": -1,
+            "generate_password": true,
             "properties": {
-                "password": "",
                 "max_clients": -1,
                 "delete_delay": 30
             },

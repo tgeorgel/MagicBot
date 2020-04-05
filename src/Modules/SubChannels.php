@@ -68,8 +68,9 @@ class SubChannels
      */
     protected static function fire(stdClass $rule, int $invoker)
     {
-        $max_subchans = static::getMaxSubChan($rule);
-        $c_name       = static::getCustomChanName($invoker, $rule->names_custom);
+        $max_subchans   = static::getMaxSubChan($rule);
+        $chan_groups    = static::getOnJoinChannelsGroups($rule);
+        $c_name         = static::getCustomChanName($invoker, $rule->names_custom);
 
         if (!$c_name) {
             $c_name = static::getChanName($rule, $max_subchans);
@@ -80,6 +81,10 @@ class SubChannels
         }
 
         $props = static::mergeProperties($rule);
+
+        if (static::getGeneratePassword($rule)) {
+            $props->password = static::generatePassword();
+        }
 
         $c_properties = [
             'cpid'                   => $rule->channel_id,
@@ -95,11 +100,22 @@ class SubChannels
         }
 
         $created_id = static::$bot->query->channelCreate($c_properties);
+        $invoker    = static::$bot->query->clientGetById($invoker);
 
-        static::$bot->query->clientGetById($invoker)->move($created_id, $props->password);
+        $invoker->move($created_id, $props->password);
 
-        if ($rule->on_join_msg !== '') {
-            static::$bot->query->clientGetById($invoker)->message($rule->on_join_msg);
+        if ($rule->on_create_msg !== '') {
+            $invoker->message($rule->on_create_msg);
+        }
+
+        if (static::getGeneratePassword($rule)) {
+            $invoker->message("Channel password : " . $props->password);
+        }
+
+        if (!empty($chan_groups)) {
+            foreach ($chan_groups as $chan_group) {
+                $invoker->setChannelGroup($created_id, $chan_group);
+            }
         }
 
         static::success((string) $c_name);
@@ -132,6 +148,34 @@ class SubChannels
     protected static function getMaxSubChan(object $rule): int
     {
         return $rule->max_subchannels !== -1 ? $rule->max_subchannels : static::$conf->max_subchannels;
+    }
+
+
+    /**
+     * Get the server groups to add to the client on channel creation
+     * 
+     * @param object $rule Rule object
+     * 
+     * @return array
+     * @since 2.1
+     */
+    protected static function getOnJoinChannelsGroups(object $rule): array
+    {
+        return $rule->on_create_channel_groups ?? static::$conf->on_create_channel_groups;
+    }
+
+
+    /**
+     * Get the generate password option
+     * 
+     * @param object $rule Rule object
+     * 
+     * @return bool
+     * @since 2.1
+     */
+    protected static function getGeneratePassword(object $rule): bool
+    {
+        return $rule->generate_password ?? static::$conf->generate_password;
     }
 
 
@@ -197,6 +241,23 @@ class SubChannels
         }
 
         return false;
+    }
+
+
+    /**
+     * Generate a password for channels
+     * 
+     * @param int $length 
+     * @return string
+     */
+    protected static function generatePassword(int $length = 6)
+    {
+        if (function_exists('random_bytes')) {
+            $bytes = random_bytes($length / 2);
+        } else {
+            $bytes = openssl_random_pseudo_bytes($length / 2);
+        }
+        return bin2hex($bytes);
     }
 
 
