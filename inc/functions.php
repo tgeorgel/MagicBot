@@ -1,88 +1,44 @@
 <?php
 
-function printl($s, $t = 'info', $sp = "")
+/**
+ * Print server output
+ * 
+ * @param string $message
+ * @param string $type
+ * @param string $prefix
+ * 
+ * @return void
+ * @since 1.0
+ */
+function printl($message, $type = 'info', $prefix = '')
 {
-    switch ($t) {
+    switch ($type) {
         case 'info':
-            $t = "•• INFO ••";
+            $type = "•• INFO ••";
             break;
         case 'warn':
-            $t = "•• WARNING ••";
+            $type = "•• WARNING ••";
             break;
         case 'event':
-            $t = "•• EVENT ••";
+            $type = "•• EVENT ••";
             break;
         case 'error':
-            $t = "•• ERROR ••";
+            $type = "•• ERROR ••";
             break;
         case 'ferror':
-            $t = "•• FATAL ERROR ••";
+            $type = "•• FATAL ERROR ••";
             break;
     }
-    echo $sp . $t . "  →  " . $s . "\n";
+    echo $prefix . $type . "  →  " . $message . "\n";
 }
 
+/**
+ * TS3 Hooks
+ */
 
-function channelExist($channel)
-{
-    global $srv;
-    try {
-        $channel_f = $srv->channelGetByName($channel);
-        return 1;
-    } catch (Exception $e) {
-        return 0;
-    }
-}
-
-
-
-function isServergroupMember(TeamSpeak3_Node_Client $cl, array $sgs = array()) // If client is in the server groups list return 1, else return 0.
-{
-    try {
-        $cl_sgs = explode(',', (string) $cl->client_servergroups);
-
-        foreach ($cl_sgs as $cl_sg)
-            if (in_array($cl_sg, $sgs)) return 1;
-
-        return 0;
-    } catch (Exception $e) {
-        printl("Client SG Member Check failed: " . $e->getMessage(), 'warn');
-        return 0;
-    }
-}
-
-
-function isClientsUID(TeamSpeak3_Node_Client $cl, $uid)
-{
-    try {
-        if ((string) $cl->client_unique_identifier == $uid) return 1;
-        else return 0;
-    } catch (Exception $e) {
-        printl("Client UID Check failed: " . $e->getMessage(), 'warn');
-        return 0;
-    }
-}
-
-
-function isGoodToReceiveSGS($c_tocheck, $rules, $mode)
-{
-    if ($mode === "ignore") {
-        foreach ($c_tocheck as $id) {
-            if (in_array($id, $rules))
-                return 0;
-        }
-        return 1;
-    } elseif ($mode === "only") {
-        foreach ($c_tocheck as $id) {
-            if (in_array($id, $rules))
-                return 1;
-        }
-        return 0;
-    } else
-        return 1;
-}
-
-
+/**
+ * Called on bot timeout
+ */
 function onTimeout($seconds, TeamSpeak3_Adapter_ServerQuery $adapter)
 {
     $bot = \App\Classes\Bot::getinstance();
@@ -93,6 +49,9 @@ function onTimeout($seconds, TeamSpeak3_Adapter_ServerQuery $adapter)
 }
 
 
+/**
+ * Dispatch the event to the bot class
+ */
 function onEvent(TeamSpeak3_Adapter_ServerQuery_Event $event, TeamSpeak3_Node_Host $host)
 {
     $bot = \App\Classes\Bot::getinstance();
@@ -104,18 +63,28 @@ function onEvent(TeamSpeak3_Adapter_ServerQuery_Event $event, TeamSpeak3_Node_Ho
     }
 }
 
+
+/**
+ * Called on bot connect
+ */
 function onConnect(TeamSpeak3_Adapter_ServerQuery $adapter)
 {
     printl("Server is running with version " . $adapter->getHost()->version('version') . " on " . $adapter->getHost()->version('platform'));
 }
 
 
+/**
+ * Called on bot authentication
+ */
 function onLogin(TeamSpeak3_Node_Host $host)
 {
     printl("Authenticated as user \"" . $host->whoamiGet('client_login_name') . "\"");
 }
 
 
+/**
+ * Called on server selection
+ */
 function onSelect(TeamSpeak3_Node_Host $host)
 {
     printl("Selected virtual server Id → " . $host->serverSelectedId());

@@ -22,7 +22,10 @@ class Bot
 
 
     /**
-     * Return bot instance
+     * Return the Bot instance
+     * 
+     * @return Bot
+     * @since 2.0
      */
     public static function getinstance(): Bot
     {
@@ -38,6 +41,8 @@ class Bot
 
     /**
      * Init the class
+     * 
+     * @since 2.0
      */
     private function __construct()
     {
@@ -47,6 +52,9 @@ class Bot
 
     /**
      * Startup the bot
+     * 
+     * @return TeamSpeak3_Node_Server
+     * @since 2.0
      */
     public function startup()
     {
@@ -72,6 +80,12 @@ class Bot
     }
 
 
+    /**
+     * Finalize bot stratup
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function finishStartup()
     {
         // Push connection message   
@@ -101,6 +115,12 @@ class Bot
     }
 
 
+    /**
+     * Loop and call recurrent actions (infinite loop)
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function loop()
     {
         while (1) {
@@ -125,6 +145,7 @@ class Bot
      * Event registration
      * 
      * @return void
+     * @since 2.0
      */
     public function registerEvents()
     {
@@ -138,6 +159,14 @@ class Bot
     }
 
 
+    /**
+     * Read event type and dispatch to the right hook
+     * 
+     * @param TeamSpeak3_Adapter_ServerQuery_Event $event 
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function dispatchEvent(\TeamSpeak3_Adapter_ServerQuery_Event $event)
     {
         $type = $event->getType();
@@ -159,22 +188,38 @@ class Bot
         //     onEnteredView($event);
         // else
         //     printl("Notification: " . $type . ": " . $event->getMessage() . "\n");
-
-        unset($type, $data, $event, $host);
     }
 
 
+    /**
+     * Event hook : Text message
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function onTextMessage()
     {
     }
 
 
+    /**
+     * Event hook : Client moved
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function onClientMoved($event)
     {
         \App\Modules\SubChannels::run($event);
     }
 
 
+    /**
+     * Event hook : Client connect
+     * 
+     * @return void
+     * @since 2.0
+     */
     public function onClientEnterView()
     {
     }
