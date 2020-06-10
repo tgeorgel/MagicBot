@@ -16,7 +16,7 @@ class SubChannels
      * Module entry point
      * 
      * @param App\Classes\Bot $bot
-     * @param array           $event
+     * @param mixed           $event
      * 
      * @return void
      * @since 2.0
@@ -115,6 +115,18 @@ class SubChannels
         if (!empty($chan_groups)) {
             foreach ($chan_groups as $chan_group) {
                 $invoker->setChannelGroup($created_id, $chan_group);
+            }
+        }
+
+        // Move to default channel
+        if (isset($_ENV['BOT_DEFAULT_CHANNEL'])) {
+            try {
+                static::$bot->query->clientMove(
+                    (int) static::$bot->query->whoamiGet("client_id"),
+                    $_ENV['BOT_DEFAULT_CHANNEL'],
+                    $_ENV['BOT_DEFAULT_CHANNEL_PASS']
+                );
+            } catch (\TeamSpeak3_Adapter_ServerQuery_Exception $e) {
             }
         }
 
