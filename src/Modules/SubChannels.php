@@ -247,7 +247,7 @@ class SubChannels
     /**
      * Generate a password for channels
      * 
-     * @param int $length 
+     * @param int $length Sould be %2
      * @return string
      */
     protected static function generatePassword(int $length = 6)
