@@ -59,7 +59,7 @@ class Bot
     public function startup()
     {
         $uri = sprintf(
-            "serverquery://%s:%s@%s:%s/?server_port=%s&nickname=\"%s\"&timeout=500&blocking=0",
+            "serverquery://%s:%s@%s:%s/?server_port=%s&nickname=%s&timeout=500&blocking=0",
             $_ENV['TS_QUERY_USER'],
             $_ENV['TS_QUERY_PASSWORD'],
             $_ENV['TS_SERVER_ADDRESS'],
