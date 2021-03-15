@@ -10,7 +10,7 @@ require_once 'vendor/autoload.php';
 require_once 'inc/functions.php';
 
 
-echo "\n\n•••|     THIS IS NOT A RELASE!! This bot may contain bugs     |•••\n\n";
+echo "\n\n•••|     MagicBot v" . VERSION . "     |•••\n\n";
 
 
 $dotenv = new Symfony\Component\Dotenv\Dotenv();

@@ -1,1 +1,1 @@
-[Read the wiki !](https://gitlab.com/tgeorgel/teamspeak-php-magicbot/-/wikis/1-—-Getting-started)
+To see a demo and get started, please [read the wiki](https://gitlab.com/tgeorgel/teamspeak-php-magicbot/-/wikis/home) !
